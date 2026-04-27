@@ -27,6 +27,11 @@ final class VideoGamesList implements Countable, IteratorAggregate
     private Filter $filter;
 
     /**
+     * @var int[]
+     */
+    private array $submittedTagIds = [];
+
+    /**
      * @var Paginator<VideoGame>
      */
     private Paginator $data;
@@ -67,7 +72,18 @@ final class VideoGamesList implements Countable, IteratorAggregate
             ->handleRequest($request)
             ->createView();
 
-        $this->data = $this->videoGameRepository->getVideoGames($this->pagination, $this->filter);
+        $submittedFilter = $request->query->all()['filter'] ?? [];
+        $submittedTags = $submittedFilter['tags'] ?? [];
+
+            if ($submittedTags !== [] && !is_array($submittedTags)) {
+                $submittedTags = [$submittedTags];
+            }
+
+            if ($submittedTags !== []) {
+            $this->submittedTagIds = $submittedTags;
+            }
+
+        $this->data = $this->videoGameRepository->getVideoGames($this->pagination, $this->getQueryFilter());
 
         $this->pagination->init(count($this->data), count($this));
 
@@ -149,7 +165,7 @@ final class VideoGamesList implements Countable, IteratorAggregate
 
     public function count(): int
     {
-        return count($this->data->getIterator());
+        return count($this->data);
     }
 
     public function generateUrl(int $page): string
@@ -157,6 +173,14 @@ final class VideoGamesList implements Countable, IteratorAggregate
         return $this->urlGenerator->generate(
             $this->route,
             ['page' => $page] + $this->pagination->toArray() + $this->routeParameters
+        );
+    }
+
+    private function getQueryFilter(): Filter
+    {
+        return new Filter(
+            $this->filter->getSearch(),
+            $this->submittedTagIds !== [] ? $this->submittedTagIds : $this->filter->getTags()
         );
     }
 }
