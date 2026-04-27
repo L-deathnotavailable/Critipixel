@@ -78,7 +78,7 @@ class ShowTest extends FunctionalTestCase
             ],
         ]);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testReviewWithMissingRatingReturnsValidationError(): void
@@ -88,6 +88,20 @@ class ShowTest extends FunctionalTestCase
         $this->client->request('POST', '/jeu-video-1', [
             'review' => [
                 'comment' => 'Commentaire sans note.',
+            ],
+        ]);
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testReviewWithTooLongCommentReturnsValidationError(): void
+    {
+        $this->login('user+1@email.com');
+
+        $this->client->request('POST', '/jeu-video-1', [
+            'review' => [
+                'rating' => 4,
+                'comment' => str_repeat('a', 256),
             ],
         ]);
 

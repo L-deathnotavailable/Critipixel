@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[Entity]
 class Review
@@ -33,6 +34,7 @@ class Review
     #[Column]
     private int $rating;
 
+    #[Length(max: 255)]
     #[Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
 
