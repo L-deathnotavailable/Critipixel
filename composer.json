@@ -7,7 +7,6 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "ext-pgsql": "*",
         "ext-intl": "*",
         "ext-mbstring": "*",
         "doctrine/dbal": "^3",
@@ -82,8 +81,7 @@
             "symfony console doctrine:fixtures:load -n --purge-with-truncate"
         ],
         "db-test": [
-            "symfony console doctrine:database:drop -f --if-exists --env=test",
-            "symfony console doctrine:database:create --env=test",
+            "symfony console doctrine:schema:drop --force --full-database --env=test",
             "symfony console doctrine:migrations:migrate -n --env=test",
             "symfony console doctrine:fixtures:load -n --purge-with-truncate --env=test"
         ],
@@ -91,7 +89,7 @@
             "composer db-test",
             "symfony php bin/phpunit"
         ],
-        "phpstan": "phpstan analyse --configuration=phpstan.dist.neon",
+        "phpstan": "phpstan analyse --configuration=phpstan.dist.neon --memory-limit=1G",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
