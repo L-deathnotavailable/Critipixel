@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Id]
     #[GeneratedValue]
     #[Column]
-    private ?int $id = null;
+    private int $id;
 
     #[NotBlank]
     #[Length(max: 30)]

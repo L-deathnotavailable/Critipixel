@@ -20,7 +20,7 @@ class Tag
     #[Id]
     #[GeneratedValue]
     #[Column]
-    private ?int $id = null;
+    private int $id;
 
     #[Column(unique: true)]
     #[Slug(fields: ['name'])]

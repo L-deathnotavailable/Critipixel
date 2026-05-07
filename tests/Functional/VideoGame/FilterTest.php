@@ -30,6 +30,8 @@ final class FilterTest extends FunctionalTestCase
 
     /**
      * @dataProvider provideTagFilters
+     * @param array<string|int> $tags
+     * @param array<string> $expectedTitles
      */
     public function testShouldFilterVideoGamesByTags(array $tags, int $expectedCount, array $expectedTitles, bool $useRawTagIds = false): void
     {
@@ -49,6 +51,9 @@ final class FilterTest extends FunctionalTestCase
         }
     }
 
+    /**
+     * @return iterable<string, array{0: array<string|int>, 1: int, 2: array<string>, 3?: bool}>
+     */
     public static function provideTagFilters(): iterable
     {
         yield 'no tag' => [[], 10, []];

@@ -12,6 +12,7 @@ class AverageRatingCalculatorTest extends TestCase
 {
     /**
      * @dataProvider ratingsProvider
+     * @param array<int> $ratings
      */
     public function testAverageRatingCalculation(array $ratings, ?int $expectedAverage): void
     {
@@ -39,6 +40,9 @@ class AverageRatingCalculatorTest extends TestCase
         self::assertSame($expectedAverage, $videoGame->getAverageRating());
     }
 
+    /**
+     * @return array<string, array{0: array<int>, 1: ?int}>
+     */
     public static function ratingsProvider(): array
     {
         return [

@@ -23,7 +23,7 @@ class ShowTest extends FunctionalTestCase
     public function testAuthenticatedUserCanAddReview(): void
     {
         $entityManager = $this->getEntityManager();
-        $user = $entityManager->getRepository(User::class)->findOneByEmail('user+0@email.com');
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'user+0@email.com']);
         $videoGame = $entityManager->getRepository(VideoGame::class)->findOneBy(['slug' => 'jeu-video-0']);
 
         $existingReview = $entityManager->getRepository(Review::class)->findOneBy([

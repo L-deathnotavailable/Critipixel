@@ -11,6 +11,8 @@ class NumberOfRatingPerValueTest extends TestCase
 {
     /**
      * @dataProvider ratingsProvider
+     * @param array<int> $ratings
+     * @param array<int, int> $expected
      */
     public function testNumberOfRatingsPerValue(array $ratings, array $expected): void
     {
@@ -23,6 +25,7 @@ class NumberOfRatingPerValueTest extends TestCase
                 3 => $numberOfRatingsPerValue->increaseThree(),
                 4 => $numberOfRatingsPerValue->increaseFour(),
                 5 => $numberOfRatingsPerValue->increaseFive(),
+                default => throw new \RuntimeException('Invalid rating value'),
             };
         }
 
@@ -33,6 +36,9 @@ class NumberOfRatingPerValueTest extends TestCase
         self::assertSame($expected[5], $numberOfRatingsPerValue->getNumberOfFive());
     }
 
+    /**
+     * @return array<string, array{0: array<int>, 1: array<int, int>}>
+     */
     public static function ratingsProvider(): array
     {
         return [

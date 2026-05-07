@@ -1,0 +1,16 @@
+parameters:
+    level: 6
+    paths:
+        - src
+        - tests
+
+    tmpDir: var/cache/phpstan
+
+    excludePaths:
+        - var
+        - vendor
+        - migrations
+
+    ignoreErrors:
+        - identifier: property.onlyRead
+        - identifier: property.onlyWritten

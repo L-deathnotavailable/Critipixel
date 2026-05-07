@@ -20,7 +20,7 @@ class Review
     #[Id]
     #[GeneratedValue]
     #[Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ManyToOne(targetEntity: VideoGame::class, inversedBy: 'reviews')]
     #[JoinColumn(nullable: false, onDelete: 'CASCADE')]
