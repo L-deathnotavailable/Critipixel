@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_ENV: test
-      APP_DEBUG: "0"
+      APP_DEBUG: "1"
       APP_SECRET: "ci_dummy_secret_ci_dummy_secret"
       DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data_test.db"
 
@@ -29,7 +29,7 @@ jobs:
       - name: Installer les dépendances Composer
         env:
           APP_ENV: test
-          APP_DEBUG: "0"
+          APP_DEBUG: "1"
           APP_SECRET: "ci_dummy_secret_ci_dummy_secret"
           DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data_test.db"
         run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-req=ext-pgsql
