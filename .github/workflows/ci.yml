@@ -34,6 +34,9 @@ jobs:
           DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data_test.db"
         run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-req=ext-pgsql
 
+      - name: Compiler les assets Sass
+        run: php bin/console sass:build --env=test
+
       - name: Préparer la base de test
         run: |
           mkdir -p var
