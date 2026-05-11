@@ -7,7 +7,6 @@ on:
   pull_request:
 
 jobs:
-  jobs:
   tests-and-static-analysis:
     runs-on: ubuntu-latest
     env:
@@ -35,11 +34,15 @@ jobs:
           DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data_test.db"
         run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-req=ext-pgsql
 
+      - name: Compiler les assets Sass
+        run: php bin/console sass:build --env=test
+
       - name: Préparer la base de test
         run: |
-          php bin/console doctrine:database:create --env=test --if-not-exists
+          mkdir -p var
+          php bin/console doctrine:schema:drop --force --full-database --env=test || true
           php bin/console doctrine:migrations:migrate --env=test --no-interaction
-          php bin/console doctrine:fixtures:load --env=test --no-interaction
+          php bin/console doctrine:fixtures:load --env=test --no-interaction --purge-with-truncate
 
       - name: Lancer PHPStan
         run: vendor/bin/phpstan analyse --configuration=phpstan.dist.neon
