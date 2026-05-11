@@ -7,7 +7,6 @@ on:
   pull_request:
 
 jobs:
-  jobs:
   tests-and-static-analysis:
     runs-on: ubuntu-latest
     env:
